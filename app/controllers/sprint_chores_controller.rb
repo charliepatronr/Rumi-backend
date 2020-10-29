@@ -10,4 +10,7 @@ class SprintChoresController < ApplicationController
         render json: SprintChoreSerializer.new(sprint_chore).to_serialized_json
     end
 
+
+    
+
 end
