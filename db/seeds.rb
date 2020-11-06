@@ -6,6 +6,11 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
+SprintChore.delete_all
+Chore.delete_all
+Sprint.delete_all
+User.delete_all
+House.delete_all
 
 houses = []
 users_house_1 = []
@@ -19,15 +24,22 @@ sprint_chores_house_2 = []
     houses << House.create(name: Faker::TvShows::GameOfThrones.house, address: Faker::TvShows::GameOfThrones.city, img: 'https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/d54a6eed-5c37-4a6c-a284-827a04891881/d72igfn-86386839-bbbb-41cc-82df-9bcf01069586.png/v1/fill/w_894,h_894,strp/stark_house_wolf___game_of_thrones_by_komankk_d72igfn-pre.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOiIsImlzcyI6InVybjphcHA6Iiwib2JqIjpbW3siaGVpZ2h0IjoiPD0xMDI0IiwicGF0aCI6IlwvZlwvZDU0YTZlZWQtNWMzNy00YTZjLWEyODQtODI3YTA0ODkxODgxXC9kNzJpZ2ZuLTg2Mzg2ODM5LWJiYmItNDFjYy04MmRmLTliY2YwMTA2OTU4Ni5wbmciLCJ3aWR0aCI6Ijw9MTAyNCJ9XV0sImF1ZCI6WyJ1cm46c2VydmljZTppbWFnZS5vcGVyYXRpb25zIl19.PkE5bNVMGNkGlA2pk2QeMP-CPUuDIm8Zps7a-thYFdo', rules: 'Winter is coming')
 end 
 
-4.times do 
-    users_house_1 << User.create(name: Faker::TvShows::GameOfThrones.character, admin: false, house_id: House.all.first.id, points:0, historical_points:0)
-end
+# 3.times do 
+#     users_house_1 << User.create(name: Faker::TvShows::GameOfThrones.character, admin: false, house_id: House.all.first.id, points:0, historical_points:0)
+# end
 
-4.times do 
+users_house_1 << User.create(name: 'Paola Portilla', admin: false, house_id: House.all.first.id, points:0, historical_points:0, img: 'https://previews.123rf.com/images/nikiteev/nikiteev1810/nikiteev181000057/110071440-vector-single-cartoon-illustration-the-letter-p.jpg')
+users_house_1 << User.create(name: 'Diego G', admin: false, house_id: House.all.first.id, points:0, historical_points:0)
+users_house_1 << User.create(name: 'Charlie Patron', admin: true, house_id: House.all.first.id, points:0, historical_points:0, img: 'https://media-exp1.licdn.com/dms/image/C5603AQGlM_n24v01bw/profile-displayphoto-shrink_200_200/0?e=1606953600&v=beta&t=y152mI6kvFtdGtdbdVKavgOO_aVAr6So8PO5wBpy4w0')
+
+
+
+
+3.times do 
     users_house_2 << User.create(name: Faker::TvShows::GameOfThrones.character, admin: false, house_id: House.all.sample.id, points:0, historical_points:0)
 end
 
-users_house_1 << User.create(name: Faker::TvShows::GameOfThrones.character, admin: true, house_id: House.all.first.id, points:0, historical_points:0)
+# users_house_1 << User.create(name: Faker::TvShows::GameOfThrones.character, admin: true, house_id: House.all.first.id, points:0, historical_points:0)
 users_house_2 << User.create(name: Faker::TvShows::GameOfThrones.character, admin: true, house_id: House.all.last.id, points:0, historical_points:0)
 
 
@@ -63,8 +75,8 @@ sprint_house_2 = []
 
 
 
-sprint_house_1 << Sprint.create(house_id: House.all.first.id, begin_date: Faker::Date.between(from: '2020-10-01', to: '2020-10-25'), completion_status: false)
-sprint_house_2 << Sprint.create(house_id: House.all.last.id, begin_date: Faker::Date.between(from: '2020-10-01', to: '2020-10-25'), completion_status: false)
+sprint_house_1 << Sprint.create(house_id: House.all.first.id, begin_date: Faker::Date.between(from: '2020-10-01', to: '2020-10-25'), completion_status: false, active: true, approval: true)
+sprint_house_2 << Sprint.create(house_id: House.all.last.id, begin_date: Faker::Date.between(from: '2020-10-01', to: '2020-10-25'), completion_status: false, active: true, approval:true)
 
 chores_house_1.each do |chore|
     sprint_chores_house_1 << SprintChore.create(sprint_id: sprint_house_1[0].id, chore_id: chore.id, completion_status: false, user_id: users_house_1.sample.id )
