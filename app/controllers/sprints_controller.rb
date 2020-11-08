@@ -17,7 +17,7 @@ class SprintsController < ApplicationController
     def create 
         house = params[:sprint][:house_id]
         begin_date = params[:sprint][:begin_date]
-        created_sprint = Sprint.find_or_create_by(house_id: house, begin_date: begin_date )
+        created_sprint = Sprint.create(house_id: house, begin_date: begin_date )
 
         if created_sprint
             user_array = created_sprint.house.users
@@ -46,36 +46,41 @@ class SprintsController < ApplicationController
 
 
     def confirm 
-        sprint_id = params([:sprint])
-        user_id = params([:sprint][:user_id])
-        house_id = params([:sprint][:house_id])
+        sprint_id = params[:sprint_id]
+        user_id = params[:user_id]
+        house_id = params[:house_id]
+        sprint = Sprint.find(sprint_id)
         sprint.confirm_sprint_chores(sprint_id, user_id, house_id)
+        
     
         if sprint.approval === true 
             sprint_chores = sprint.sprint_chores
-            render  render json: sprint_chores, include: '*.*'
+            render json: sprint_chores, include: '*.*'
         end
-
 
     end
 
 
     def reject 
-        sprint_id = params([:sprint])
-        user_id = params([:sprint][:user_id])
-        house_id = params([:sprint][:house_id])
-        sprint.confirm_sprint_chores(sprint_id, user_id, house_id)
+        sprint_id = params[:sprint_id]
+        user_id = params[:user_id]
+        house_id = params[:house_id]
+        sprint = Sprint.find(sprint_id)
+        byebug
+        sprint.reject_sprint_chores(sprint_id, user_id, house_id)
     
         if sprint.approval === false 
-            created_sprint = Sprint.new(house_id)
+            byebug
+            created_sprint = Sprint.create(house_id: house_id)
             user_array = created_sprint.house.users
             chore_array = created_sprint.house.chores
+            byebug
             created_sprint.create_random_sprint_chores(user_array, chore_array)
             sprint_chores = created_sprint.sprint_chores
             render json: sprint_chores, include: '*.*' 
         end
 
-        
+
     end
 
 

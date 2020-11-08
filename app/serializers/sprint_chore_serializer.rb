@@ -3,7 +3,10 @@ class SprintChoreSerializer < ActiveModel::Serializer
   :sprint_id, 
   :chore_id,
   :completion_status, 
-  :review
+  :review,
+  :accepted, 
+  :rejected
+
 
   has_one :user
   has_one :chore

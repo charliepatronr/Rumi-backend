@@ -22,40 +22,39 @@ class Sprint < ApplicationRecord
     #   end 
     # } 
 
-  def create_random_sprint_chores(user_array, chore_array)
+    def create_random_sprint_chores(user_array, chore_array)
 
-    if user_array.count < 1
-      user_array = self.house.users
+      if user_array.count < 1
+        user_array = self.house.users
+      end 
+        
+    
+      if chore_array.count > 1 
+        chore = chore_array.sample
+        user = user_array.sample
+        SprintChore.create(user_id: user.id, chore_id: chore.id, sprint_id: self.id, completion_status: false)
+
+        new_user_array = user_array.select{|user_instance| user_instance != user}
+        new_chore_array = chore_array.select{|chore_instance| chore_instance != chore}
+
+        create_random_sprint_chores(new_user_array, new_chore_array)
+
+      else
+        SprintChore.create(user_id: user_array.sample.id, chore_id: chore_array[0].id, sprint_id: self.id, completion_status: false)
+      end 
+
+
     end 
-      
-  
-    if chore_array.count > 1 
-      chore = chore_array.sample
-      user = user_array.sample
-      SprintChore.create(user_id: user.id, chore_id: chore.id, sprint_id: self.id, completion_status: false)
-
-      new_user_array = user_array.select{|user_instance| user_instance != user}
-      new_chore_array = chore_array.select{|chore_instance| chore_instance != chore}
-
-      create_random_sprint_chores(new_user_array, new_chore_array)
-
-    else
-      SprintChore.create(user_id: user_array.sample.id, chore_id: chore_array[0].id, sprint_id: self.id, completion_status: false)
-    end 
-
-
-  end 
 
 
   def confirm_sprint_chores(sprint_id, user_id, house_id)
-    sprint = Sprint.find(params[:id])
-    house = sprint.house
-    user = User.find(params[:id])
+    house = self.house
+    user = User.find(user_id)
     number_of_chores = house.chores.size
     count = 0
 
 
-    sprint_chores = sprint.sprint_chores
+    sprint_chores = self.sprint_chores
     last_sprint_chores = sprint_chores.last(number_of_chores)
 
     last_sprint_chores.map do |chore|
@@ -71,24 +70,24 @@ class Sprint < ApplicationRecord
         count += 1
       end 
     end 
-    percent = count / number_of_chores
+
+    percent = count.to_f / number_of_chores.to_f
 
     if percent >= 0.50
-      sprint.update(actiive: true, approval: true)
+      self.update(active: true, approval: true)
     end 
 
   end
 
 
   def reject_sprint_chores(sprint_id, user_id, house_id)
-    sprint = Sprint.find(params[:id])
-    house = sprint.house
-    user = User.find(params[:id])
+    house = self.house
+    user = User.find(user_id)
     number_of_chores = house.chores.size
     count = 0
 
 
-    sprint_chores = sprint.sprint_chores
+    sprint_chores = self.sprint_chores
     last_sprint_chores = sprint_chores.last(number_of_chores)
 
     last_sprint_chores.map do |chore|
@@ -102,15 +101,15 @@ class Sprint < ApplicationRecord
     last_sprint_chores.map do |chore|
       if chore.rejected  === true 
         count += 1
-      end 
+      end
     end 
-    percent = count / number_of_chores
+    
+    percent = count.to_f / number_of_chores.to_f
 
     if percent >= 0.50
-      sprint.update(approval: false, active: false)
+      self.update(active: false, approval: false)
     end 
-
-  end 
+  end
 
 
 end

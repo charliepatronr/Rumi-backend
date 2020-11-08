@@ -4,7 +4,8 @@ class SprintSerializer < ActiveModel::Serializer
   :begin_date, 
   :end_date, 
   :completion_status, 
-  :active
+  :active,
+  :approval
 
   has_many :sprint_chores
 
