@@ -16,6 +16,7 @@ Rails.application.routes.draw do
   post '/sprints/confirm', to: 'sprints#confirm'
   post '/sprints/reject', to: 'sprints#reject'
   patch '/sprint_chores/:id/complete', to: 'sprint_chores#complete'
+  post '/auth', to: 'auth#create'
 
 
 end

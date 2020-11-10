@@ -16,14 +16,12 @@ class ChoresController < ApplicationController
         title = params[:chore][:title]
         description = params[:chore][:description]
         points = params[:chore][:points]
-        house_id = params[:chore][:house_id]
-        created_chore = Chore.find_or_create_by(title: title, description:description, points: points, house_id: house_id )
+        house_id = params[:houseId]
+        created_chore = Chore.create(title: title, description: description, points: points, house_id: house_id )
         if created_chore 
             render json: created_chore, include: '*.*'
-
-            # render json: ChoreSerializer.new(created_chore).to_serialized_json
         else 
-            render json: {message: 'House could not be added'}
+            render json: {message: 'Chore could not be added'}
         end 
     end 
 

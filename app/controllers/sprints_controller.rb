@@ -66,15 +66,12 @@ class SprintsController < ApplicationController
         user_id = params[:user_id]
         house_id = params[:house_id]
         sprint = Sprint.find(sprint_id)
-        byebug
         sprint.reject_sprint_chores(sprint_id, user_id, house_id)
     
         if sprint.approval === false 
-            byebug
             created_sprint = Sprint.create(house_id: house_id)
             user_array = created_sprint.house.users
             chore_array = created_sprint.house.chores
-            byebug
             created_sprint.create_random_sprint_chores(user_array, chore_array)
             sprint_chores = created_sprint.sprint_chores
             render json: sprint_chores, include: '*.*' 

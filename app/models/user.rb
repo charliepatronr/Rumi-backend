@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  has_secure_password
   belongs_to :house
   has_many :sprint_chores
   has_many :sprints, through: :house

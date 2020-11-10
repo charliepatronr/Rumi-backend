@@ -28,9 +28,9 @@ end
 #     users_house_1 << User.create(name: Faker::TvShows::GameOfThrones.character, admin: false, house_id: House.all.first.id, points:0, historical_points:0)
 # end
 
-users_house_1 << User.create(name: 'Paola Portilla', admin: false, house_id: House.all.first.id, points:0, historical_points:0, img: 'https://previews.123rf.com/images/nikiteev/nikiteev1810/nikiteev181000057/110071440-vector-single-cartoon-illustration-the-letter-p.jpg')
-users_house_1 << User.create(name: 'Diego G', admin: false, house_id: House.all.first.id, points:0, historical_points:0)
-users_house_1 << User.create(name: 'Charlie Patron', admin: true, house_id: House.all.first.id, points:0, historical_points:0, img: 'https://media-exp1.licdn.com/dms/image/C5603AQGlM_n24v01bw/profile-displayphoto-shrink_200_200/0?e=1606953600&v=beta&t=y152mI6kvFtdGtdbdVKavgOO_aVAr6So8PO5wBpy4w0')
+users_house_1 << User.create(name: 'Paola Portilla', admin: false, house_id: House.all.first.id, points:0, historical_points:0, img: 'https://previews.123rf.com/images/nikiteev/nikiteev1810/nikiteev181000057/110071440-vector-single-cartoon-illustration-the-letter-p.jpg', username: 'diegog', password:'123')
+users_house_1 << User.create(name: 'Diego G', admin: false, house_id: House.all.first.id, points:0, historical_points:0, username: 'paopao', password:'123')
+users_house_1 << User.create(name: 'Charlie Patron', admin: true, house_id: House.all.first.id, points:0, historical_points:0, img: 'https://media-exp1.licdn.com/dms/image/C5603AQGlM_n24v01bw/profile-displayphoto-shrink_200_200/0?e=1606953600&v=beta&t=y152mI6kvFtdGtdbdVKavgOO_aVAr6So8PO5wBpy4w0', username: 'charliepatronr', password:'123')
 
 
 

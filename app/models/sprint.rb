@@ -97,7 +97,14 @@ class Sprint < ApplicationRecord
       end 
 
     end 
-  
+
+    #users 
+    #sprint.sprint_chores.uniq_by to get array of chores unique by user
+    #unique_sprint.chore.filter 
+
+  ## get array of sprint chores uniq_by user id 
+
+
     last_sprint_chores.map do |chore|
       if chore.rejected  === true 
         count += 1
