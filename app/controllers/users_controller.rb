@@ -14,17 +14,19 @@ class UsersController < ApplicationController
     end
 
     def create 
-        name = params['user']['name']
-        email = params['user']['email']
+        name = params[:user][:name]
+        email = params[:user][:email]
+        img = params[:user][:img]
         ##why is password outside of user params and why do I need to use password_digest instead of password?
         password = params[:password]
-        username = params['user']['username']
-        house_id = 1
-        created_user = User.find_or_create_by(name: name, email:email, username: username, password_digest: password, house_id: house_id)
-        if created_user 
-            render json: UserSerializer.new(created_user).to_serialized_json
+        username = params[:user][:username]
+        house_id = params[:user][:house_id]
+        created_user = User.new(name: name, email:email, img: img, username: username, password: password, house_id: house_id, admin: false, historical_points: '0', points: 0 )
+        if created_user.save
+            render json: created_user, include: '*.*'
         else 
-            render json: {message: 'User could not be added'}
+            byebug
+            render json: { message: 'ENTER VALID HOUSE KEY' }
         end 
     end 
 

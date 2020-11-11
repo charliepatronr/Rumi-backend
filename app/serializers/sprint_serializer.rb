@@ -8,6 +8,7 @@ class SprintSerializer < ActiveModel::Serializer
   :approval
 
   has_many :sprint_chores
+  has_many :users
 
 
 end

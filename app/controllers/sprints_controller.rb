@@ -37,6 +37,8 @@ class SprintsController < ApplicationController
         completion_status = params['sprint']['completion_status']
         end_date = params['sprint']['end_date']
 
+        sprint.end_sprint_points
+    
         if sprint.update( completion_status: completion_status, end_date: end_date)
             render json: sprint, include: '*.*'
         else 

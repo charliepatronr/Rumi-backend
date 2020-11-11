@@ -1,9 +1,7 @@
 class Sprint < ApplicationRecord
   belongs_to :house
   has_many :sprint_chores
-
-
-
+  has_many :users, through: :house
 
   ## Add to users number of assigned chores? To help balance chore assignment throught
   ## with iterations?
@@ -21,6 +19,36 @@ class Sprint < ApplicationRecord
     #     create_random_sprint_chores(u, c, sprint_assignment)      
     #   end 
     # } 
+
+    def end_sprint_points
+
+      sprint_chores = self.sprint_chores
+      
+      sprint_chores.each do |sprint_chore|
+        chore_points = sprint_chore.chore.points 
+        user = sprint_chore.user 
+        user_points = user.historical_points 
+        new_historical_points = (user_points - chore_points)
+        
+        if !sprint_chore.completion_status
+          user.update(historical_points: new_historical_points)
+        end 
+
+      end 
+
+      ## get array with sprint chores with sprint.sprint_chores 
+      ## iterate through each sprint chore 
+      # if that sprint chore has a completed status dont do anything points have already been added
+      # if sprint chore has a completed status of false or nill 
+        # then do sprint_chore.user.points - sprint_chore.chore.points 
+        # update de user
+        # end loop 
+
+        #add sprint has many users through house to render de users of that sprint with that fetch request.
+        #update serializer to include users 
+        # when I get the response after PATCH request to end sprint, update roomie store state
+      
+    end
 
     def create_random_sprint_chores(user_array, chore_array)
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_06_054326) do
+ActiveRecord::Schema.define(version: 2020_11_11_011731) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -70,7 +70,7 @@ ActiveRecord::Schema.define(version: 2020_11_06_054326) do
     t.string "email"
     t.bigint "house_id", null: false
     t.integer "points"
-    t.string "historical_points"
+    t.integer "historical_points"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "password_digest"
