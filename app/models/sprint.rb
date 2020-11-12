@@ -29,25 +29,33 @@ class Sprint < ApplicationRecord
         user = sprint_chore.user 
         user_points = user.historical_points 
         new_historical_points = (user_points - chore_points)
-        
+
         if !sprint_chore.completion_status
           user.update(historical_points: new_historical_points)
         end 
 
       end 
 
-      ## get array with sprint chores with sprint.sprint_chores 
-      ## iterate through each sprint chore 
-      # if that sprint chore has a completed status dont do anything points have already been added
-      # if sprint chore has a completed status of false or nill 
-        # then do sprint_chore.user.points - sprint_chore.chore.points 
-        # update de user
-        # end loop 
+    end
 
-        #add sprint has many users through house to render de users of that sprint with that fetch request.
-        #update serializer to include users 
-        # when I get the response after PATCH request to end sprint, update roomie store state
-      
+
+    def roomie_of_the_week
+      sprint_chores = self.sprint_chores
+      user_chore_hash = sprint_chores.select { |sprint_chore| sprint_chore.completion_status}.map{
+        |sprint_chore| {  sprint_chore.user.id => sprint_chore.chore.points }
+      }
+      result = Hash.new(0)      
+      user_chore_hash.each{|nested_hash| nested_hash.each { |key, value| result[key] += value} }
+      puts result
+      if result.size >=1 
+        arr = result.max_by{|k, v| v }[0]
+        if arr[1] > 0
+          user_id = arr[0]
+        end 
+      else
+        user_id = nil
+      end 
+      user_id
     end
 
     def create_random_sprint_chores(user_array, chore_array)
