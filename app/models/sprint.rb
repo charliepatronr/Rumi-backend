@@ -47,8 +47,9 @@ class Sprint < ApplicationRecord
       result = Hash.new(0)      
       user_chore_hash.each{|nested_hash| nested_hash.each { |key, value| result[key] += value} }
       puts result
+
       if result.size >=1 
-        arr = result.max_by{|k, v| v }[0]
+        arr = result.max_by{|k, v| v }
         if arr[1] > 0
           user_id = arr[0]
         end 

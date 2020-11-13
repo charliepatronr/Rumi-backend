@@ -25,7 +25,6 @@ class UsersController < ApplicationController
         if created_user.save
             render json: created_user, include: '*.*'
         else 
-            byebug
             render json: { message: 'ENTER VALID HOUSE KEY' }
         end 
     end 
